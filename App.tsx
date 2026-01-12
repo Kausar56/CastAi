@@ -14,39 +14,42 @@ const App: React.FC = () => {
   const [user, setUser] = useState<NeynarUser | null>(null);
   const [isInitializing, setIsInitializing] = useState(true);
 
+  const refreshUser = async () => {
+    if (!user && !isInitializing) return;
+    const fid = user?.fid || 3;
+    const userData = await fetchUserInfo(fid);
+    if (userData) {
+      setUser(userData);
+    }
+  };
+
   useEffect(() => {
     const initApp = async () => {
-      // 1. Immediately signal ready to the Farcaster host
       try {
-        console.log("Signaling SDK ready...");
         await sdk.actions.ready();
       } catch (e) {
-        console.warn("Farcaster SDK ready call failed. Are you in a browser?", e);
+        console.warn("Farcaster SDK ready call failed.", e);
       }
 
-      // 2. Check manual disconnect state
       const isManualDisconnect = localStorage.getItem('castai_disconnected') === 'true';
       if (isManualDisconnect) {
         setIsInitializing(false);
         return;
       }
 
-      // 3. Attempt to load user context
       try {
         const contextPromise = sdk.context;
-        // Use a timeout for the context promise to avoid hanging if the SDK isn't responding
         const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 2000));
         
-        let fid = 3; // Default demo FID
+        let fid = 3; 
         
         try {
           const context = await Promise.race([contextPromise, timeoutPromise]) as any;
           if (context?.user?.fid) {
             fid = context.user.fid;
-            console.log("Farcaster context found for FID:", fid);
           }
         } catch (e) {
-          console.log("Context lookup failed or timed out, using fallback demo FID.");
+          console.log("Context fallback to FID 3.");
         }
 
         const userData = await fetchUserInfo(fid);
@@ -93,7 +96,7 @@ const App: React.FC = () => {
       case Tab.AIRDROP:
         return <AirdropTab />;
       case Tab.PROFILE:
-        return <ProfileTab user={user} onDisconnect={handleDisconnect} />;
+        return <ProfileTab user={user} onDisconnect={handleDisconnect} refreshUser={refreshUser} />;
       default:
         return <HomeTab />;
     }
@@ -101,7 +104,6 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-950 via-blue-950 to-black text-white flex flex-col pb-20 overflow-y-auto">
-      {/* Header */}
       <header className="p-6 flex items-center justify-between border-b border-white/10 sticky top-0 z-50 glass">
         <div className="flex flex-col">
           <h1 className="text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
@@ -135,12 +137,10 @@ const App: React.FC = () => {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="flex-1 w-full max-w-md mx-auto px-4 py-8">
         {renderTab()}
       </main>
 
-      {/* Navigation */}
       <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />
     </div>
   );

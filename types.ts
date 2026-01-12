@@ -12,7 +12,9 @@ export interface NeynarUser {
   pfp_url: string;
   follower_count: number;
   following_count: number;
-  neynar_user_score?: number;
+  neynar_user_score?: number; // Official V2 field
+  score?: number;            // V1/Legacy fallback
+  neynar_score?: number;      // Alternative fallback
   profile: {
     bio: {
       text: string;

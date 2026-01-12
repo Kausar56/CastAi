@@ -5,11 +5,26 @@ import { NeynarUser } from '../types';
 interface ProfileTabProps {
   user: NeynarUser | null;
   onDisconnect: () => void;
+  refreshUser: () => Promise<void>;
 }
 
-const ProfileTab: React.FC<ProfileTabProps> = ({ user, onDisconnect }) => {
+const ProfileTab: React.FC<ProfileTabProps> = ({ user, onDisconnect, refreshUser }) => {
   const [sharing, setSharing] = useState(false);
   const [isDisconnecting, setIsDisconnecting] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  // Silent refresh on mount to ensure real-time data
+  useEffect(() => {
+    if (user) {
+      refreshUser();
+    }
+  }, []);
+
+  const handleManualRefresh = async () => {
+    setIsRefreshing(true);
+    await refreshUser();
+    setTimeout(() => setIsRefreshing(false), 800);
+  };
 
   if (!user) {
     return (
@@ -26,8 +41,9 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ user, onDisconnect }) => {
     );
   }
 
-  // Use real-time Neynar Score from API
-  const neynarScore = (user.neynar_user_score || 0).toFixed(2);
+  // Calculate score using all available fallback fields from Neynar API
+  const rawScore = user.neynar_user_score ?? user.score ?? user.neynar_score ?? 0;
+  const neynarScore = rawScore.toFixed(2);
 
   const handleShare = async () => {
     const profileUrl = `https://warpcast.com/${user.username}`;
@@ -54,7 +70,6 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ user, onDisconnect }) => {
 
   const handleDisconnectClick = () => {
     setIsDisconnecting(true);
-    // Add a slight delay for dramatic effect/UX
     setTimeout(() => {
       onDisconnect();
       setIsDisconnecting(false);
@@ -68,9 +83,7 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ user, onDisconnect }) => {
         <div className="absolute -top-12 -right-12 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl group-hover:bg-purple-500/20 transition-all duration-700" />
         
         <div className="relative inline-block mb-6 group/avatar">
-          {/* Subtle Outer Neon Glow Ring */}
           <div className="absolute -inset-2 bg-gradient-to-tr from-purple-600 via-fuchsia-500 to-blue-400 rounded-full blur-[10px] opacity-40 group-hover/avatar:opacity-80 transition-opacity animate-pulse" />
-          {/* Sharp Inner Neon Glow Ring */}
           <div className="absolute -inset-1 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full opacity-70 animate-[spin_4s_linear_infinite]" />
           
           <img 
@@ -103,17 +116,28 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ user, onDisconnect }) => {
       </div>
 
       {/* Neynar Score Card */}
-      <div className="glass rounded-3xl p-6 border-blue-500/20 flex items-center justify-between">
+      <div className="glass rounded-3xl p-6 border-blue-500/20 flex items-center justify-between group">
         <div>
           <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-1">Real-time Reputation</h3>
           <div className="flex items-baseline gap-2">
-            <p className="text-4xl font-black text-white">{neynarScore}</p>
-            <span className="text-xs font-bold text-blue-400/70 tracking-tighter">NEYNAR SCORE</span>
+            <p className="text-4xl font-black text-white">{isRefreshing ? '---' : neynarScore}</p>
+            <span className="text-xs font-bold text-blue-400/70 tracking-tighter uppercase">Neynar Score</span>
           </div>
         </div>
-        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center">
-          <svg className="text-blue-400 animate-pulse" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-        </div>
+        <button 
+          onClick={handleManualRefresh}
+          className={`w-14 h-14 rounded-2xl bg-blue-500/10 border border-white/10 flex items-center justify-center transition-all hover:bg-blue-500/20 hover:scale-105 active:scale-90 ${isRefreshing ? 'opacity-50' : ''}`}
+        >
+          <svg 
+            className={`text-blue-400 ${isRefreshing ? 'animate-spin' : 'group-hover:rotate-180 transition-transform duration-500'}`} 
+            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+          >
+            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+            <path d="M21 3v5h-5"/>
+            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+            <path d="M8 16H3v5"/>
+          </svg>
+        </button>
       </div>
 
       {/* Action Buttons */}
@@ -146,19 +170,15 @@ const StatBox: React.FC<{ label: string, value: number, color: 'purple' | 'blue'
 
   useEffect(() => {
     let startTimestamp: number | null = null;
-    const duration = 1500; // 1.5 seconds for a premium feel
+    const duration = 1500;
     const startValue = 0;
     const endValue = value;
 
     const step = (timestamp: number) => {
       if (!startTimestamp) startTimestamp = timestamp;
       const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      
-      // Easing function: easeOutExpo for a snappier finish
       const easeOutExpo = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-      
       setDisplayValue(Math.floor(easeOutExpo * (endValue - startValue) + startValue));
-      
       if (progress < 1) {
         window.requestAnimationFrame(step);
       }
