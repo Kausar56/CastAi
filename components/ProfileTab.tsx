@@ -26,8 +26,8 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ user, onDisconnect }) => {
     );
   }
 
-  // Simulated score
-  const neynarScore = (user.follower_count / 100).toFixed(1);
+  // Use real-time Neynar Score from API
+  const neynarScore = (user.neynar_user_score || 0).toFixed(2);
 
   const handleShare = async () => {
     const profileUrl = `https://warpcast.com/${user.username}`;
@@ -105,11 +105,14 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ user, onDisconnect }) => {
       {/* Neynar Score Card */}
       <div className="glass rounded-3xl p-6 border-blue-500/20 flex items-center justify-between">
         <div>
-          <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-1">Neynar Score</h3>
-          <p className="text-4xl font-black text-white">{neynarScore}</p>
+          <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-1">Real-time Reputation</h3>
+          <div className="flex items-baseline gap-2">
+            <p className="text-4xl font-black text-white">{neynarScore}</p>
+            <span className="text-xs font-bold text-blue-400/70 tracking-tighter">NEYNAR SCORE</span>
+          </div>
         </div>
         <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center">
-          <svg className="text-blue-400" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <svg className="text-blue-400 animate-pulse" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
         </div>
       </div>
 

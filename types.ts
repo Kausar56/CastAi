@@ -12,6 +12,7 @@ export interface NeynarUser {
   pfp_url: string;
   follower_count: number;
   following_count: number;
+  neynar_user_score?: number;
   profile: {
     bio: {
       text: string;
