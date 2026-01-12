@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tab } from './types';
 import Navigation from './components/Navigation';
 import HomeTab from './components/HomeTab';
@@ -7,38 +7,46 @@ import AirdropTab from './components/AirdropTab';
 import ProfileTab from './components/ProfileTab';
 import { fetchUserInfo } from './services/neynarService';
 import { NeynarUser } from './types';
-import sdk from '@farcaster/frame-sdk';
+import { sdk } from '@farcaster/frame-sdk';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>(Tab.HOME);
   const [user, setUser] = useState<NeynarUser | null>(null);
   const [isInitializing, setIsInitializing] = useState(true);
 
-  // Signal ready immediately to the Farcaster host to clear the splash screen
-  useLayoutEffect(() => {
-    try {
-      sdk.actions.ready();
-    } catch (e) {
-      console.warn("Farcaster SDK ready call failed", e);
-    }
-  }, []);
-
   useEffect(() => {
     const initApp = async () => {
+      // 1. Immediately signal ready to the Farcaster host
       try {
-        // Attempt to retrieve FID from context with a timeout for better resilience
+        console.log("Signaling SDK ready...");
+        await sdk.actions.ready();
+      } catch (e) {
+        console.warn("Farcaster SDK ready call failed. Are you in a browser?", e);
+      }
+
+      // 2. Check manual disconnect state
+      const isManualDisconnect = localStorage.getItem('castai_disconnected') === 'true';
+      if (isManualDisconnect) {
+        setIsInitializing(false);
+        return;
+      }
+
+      // 3. Attempt to load user context
+      try {
         const contextPromise = sdk.context;
-        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 1500));
+        // Use a timeout for the context promise to avoid hanging if the SDK isn't responding
+        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 2000));
         
-        let fid = 3; // Standard fallback for demo
+        let fid = 3; // Default demo FID
         
         try {
           const context = await Promise.race([contextPromise, timeoutPromise]) as any;
           if (context?.user?.fid) {
             fid = context.user.fid;
+            console.log("Farcaster context found for FID:", fid);
           }
         } catch (e) {
-          console.warn("Farcaster context unavailable, using demo FID");
+          console.log("Context lookup failed or timed out, using fallback demo FID.");
         }
 
         const userData = await fetchUserInfo(fid);
@@ -46,7 +54,7 @@ const App: React.FC = () => {
           setUser(userData);
         }
       } catch (error) {
-        console.error("Initialization failed:", error);
+        console.error("Initialization logic failed:", error);
       } finally {
         setIsInitializing(false);
       }
@@ -56,8 +64,26 @@ const App: React.FC = () => {
   }, []);
 
   const handleDisconnect = () => {
+    localStorage.setItem('castai_disconnected', 'true');
     setUser(null);
     setActiveTab(Tab.HOME);
+  };
+
+  const handleConnect = async () => {
+    localStorage.removeItem('castai_disconnected');
+    setIsInitializing(true);
+    try {
+      let fid = 3;
+      try {
+        const context = await sdk.context;
+        if (context?.user?.fid) fid = context.user.fid;
+      } catch(e) {}
+      
+      const userData = await fetchUserInfo(fid);
+      if (userData) setUser(userData);
+    } finally {
+      setIsInitializing(false);
+    }
   };
 
   const renderTab = () => {
@@ -100,7 +126,7 @@ const App: React.FC = () => {
             </div>
           ) : (
             <button 
-              onClick={() => fetchUserInfo(3).then(setUser)}
+              onClick={handleConnect}
               className="px-4 py-1.5 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 text-xs font-bold hover:shadow-[0_0_15px_rgba(168,85,247,0.4)] transition-all active:scale-95"
             >
               Connect

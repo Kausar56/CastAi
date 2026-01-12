@@ -10,6 +10,7 @@
     <script>
       // Polyfill process.env for browser environments to prevent ReferenceErrors
       window.process = window.process || { env: {} };
+      window.process.env = window.process.env || {};
     </script>
     <style>
       body {
@@ -69,5 +70,7 @@
 </head>
   <body>
     <div id="root"></div>
+    <!-- Load the main application module -->
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>
