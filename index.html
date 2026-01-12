@@ -5,6 +5,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CastAI - Farcaster AI Studio</title>
+    
+    <!-- Farcaster Frame v2 Meta Tags -->
+    <meta property="fc:frame" content='{"version":"1","name":"CastAI Studio","iconUrl":"https://placehold.co/200x200/8b5cf6/ffffff?text=AI","homeUrl":"https://cast-ai-zeta.vercel.app","imageUrl":"https://placehold.co/1200x630/0a0118/ffffff?text=CastAI+Studio+v2","buttonTitle":"Enter Studio","splashImageUrl":"https://placehold.co/400x400/8b5cf6/ffffff?text=AI","splashBackgroundColor":"#0a0118"}' />
+    <meta property="og:title" content="CastAI Studio" />
+    <meta property="og:description" content="Premium AI Studio for Farcaster creators." />
+    <meta property="og:image" content="https://placehold.co/1200x630/0a0118/ffffff?text=CastAI+Studio+v2" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
@@ -57,6 +64,14 @@
         height: 100%;
         background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
         animation: shimmer 1.5s infinite;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes slideUp {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
       }
     </style>
   <script type="importmap">

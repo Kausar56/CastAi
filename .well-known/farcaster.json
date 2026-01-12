@@ -8,7 +8,7 @@
   "frame": {
     "version": "1",
     "name": "CastAI Studio",
-    "iconUrl": "https://placehold.co/200x200/8b5cf6/ffffff?text=CastAI",
+    "iconUrl": "https://placehold.co/200x200/8b5cf6/ffffff?text=AI",
     "homeUrl": "https://cast-ai-zeta.vercel.app",
     "imageUrl": "https://placehold.co/1200x630/0a0118/ffffff?text=CastAI+Studio+v2",
     "buttonTitle": "Enter Studio",
