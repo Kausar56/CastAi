@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { NeynarUser } from '../types';
 
@@ -46,23 +45,19 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ user, onDisconnect, refreshUser
   const neynarScore = rawScore.toFixed(2);
 
   const handleShare = async () => {
-    const profileUrl = `https://warpcast.com/${user.username}`;
-    const shareData = {
-      title: `${user.display_name} on Farcaster`,
-      text: `Check out my Farcaster profile!`,
-      url: profileUrl,
-    };
-
+    // Sharing the Mini App itself with a referral/profile context
+    const castShareUrl = `https://cast-ai-zeta.vercel.app`;
+    const warpcastShareUrl = `https://warpcast.com/~/compose?text=${encodeURIComponent("Check out my profile stats on CastAI Studio! 🚀")}&embeds[]=${encodeURIComponent(castShareUrl)}`;
+    
     setSharing(true);
     try {
-      if (navigator.share) {
-        await navigator.share(shareData);
-      } else {
-        await navigator.clipboard.writeText(profileUrl);
-        alert("Profile link copied to clipboard!");
-      }
+      // For Mini Apps, we usually open the composer with the embed
+      window.open(warpcastShareUrl, '_blank');
     } catch (err) {
       console.error("Error sharing:", err);
+      // Fallback
+      navigator.clipboard.writeText(castShareUrl);
+      alert("App link copied to clipboard!");
     } finally {
       setTimeout(() => setSharing(false), 1000);
     }
@@ -111,7 +106,7 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ user, onDisconnect, refreshUser
           className="w-full py-3 px-6 rounded-2xl bg-white/5 border border-white/10 hover:border-purple-500/50 hover:bg-white/10 transition-all flex items-center justify-center gap-2 font-bold group"
         >
           <svg className={`transition-transform ${sharing ? 'scale-125' : 'group-hover:scale-110'}`} xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-          {sharing ? 'Link Ready!' : 'Share Profile'}
+          {sharing ? 'Sharing...' : 'Share Studio'}
         </button>
       </div>
 

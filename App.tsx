@@ -10,17 +10,20 @@ import { NeynarUser } from './types';
 import { sdk } from '@farcaster/frame-sdk';
 
 const LogoIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_8px_rgba(168,85,247,0.5)]">
-    <rect width="32" height="32" rx="8" fill="url(#paint0_linear)" />
-    <path d="M22 11C22 11 19.5 11 18 13.5C16.5 16 16.5 21 16.5 21" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
-    <path d="M10 21C10 21 12.5 21 14 18.5C15.5 16 15.5 11 15.5 11" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
-    <circle cx="16" cy="16" r="3" fill="white" className="animate-pulse" />
+  <svg width="36" height="36" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_12px_rgba(168,85,247,0.6)]">
     <defs>
-      <linearGradient id="paint0_linear" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#A855F7" />
-        <stop offset="1" stopColor="#3B82F6" />
+      <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#A855F7" />
+        <stop offset="100%" stopColor="#3B82F6" />
       </linearGradient>
     </defs>
+    {/* Hexagonal Background */}
+    <path d="M50 5 L89 27.5 L89 72.5 L50 95 L11 72.5 L11 27.5 Z" fill="url(#logoGradient)" />
+    {/* Stylized 'C' Swoosh */}
+    <path d="M75 35 C65 25, 30 25, 25 50 C20 75, 60 75, 75 60 L65 60 C55 65, 35 65, 35 50 C35 35, 60 35, 65 45 Z" fill="white" fillOpacity="0.9" />
+    {/* Stars */}
+    <path d="M82 25 L84 29 L88 30 L84 31 L82 35 L80 31 L76 30 L80 29 Z" fill="white" />
+    <path d="M90 38 L91 40 L93 41 L91 42 L90 44 L89 42 L87 41 L89 40 Z" fill="white" opacity="0.8" />
   </svg>
 );
 

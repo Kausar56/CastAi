@@ -1,42 +1,58 @@
+
 import React, { useState, useRef } from 'react';
 import * as gemini from '../services/geminiService';
 import { publishCast } from '../services/neynarService';
 
 const Banner = () => (
-  <div className="relative w-full h-44 rounded-[2.5rem] overflow-hidden mb-8 border border-white/10 shadow-2xl group">
+  <div className="relative w-full h-52 rounded-[2.5rem] overflow-hidden mb-8 border border-white/10 shadow-2xl group">
     {/* Background Image / Banner */}
-    <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-black" />
+    <div className="absolute inset-0 bg-gradient-to-br from-[#0a0118] via-[#1a0b2e] to-black" />
     <img 
       src="https://cast-ai-zeta.vercel.app/image.png" 
       alt="Banner" 
-      className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay"
+      className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay group-hover:scale-105 transition-transform duration-700"
       onError={(e) => {
-        // Fallback to a solid gradient if image.png is not found
         e.currentTarget.style.display = 'none';
       }}
     />
     
     {/* Animated Glows */}
-    <div className="absolute -top-10 -left-10 w-40 h-40 bg-purple-500/30 rounded-full blur-[60px] animate-pulse" />
-    <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-500/30 rounded-full blur-[60px] animate-pulse delay-700" />
+    <div className="absolute top-0 left-1/4 w-64 h-64 bg-purple-600/20 rounded-full blur-[100px] animate-pulse" />
+    <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-blue-600/20 rounded-full blur-[100px] animate-pulse delay-1000" />
     
     {/* Content */}
     <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-10">
-      <div className="mb-2 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 backdrop-blur-md">
-        <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80">AI Engine Online</span>
+      <div className="mb-4 relative">
+        <div className="absolute -inset-4 bg-white/5 rounded-full blur-xl" />
+        <img 
+          src="https://cast-ai-zeta.vercel.app/icon.png" 
+          alt="CastAI Logo" 
+          className="w-16 h-16 rounded-2xl relative z-10 drop-shadow-[0_0_15px_rgba(168,85,247,0.5)]"
+          onError={(e) => {
+             e.currentTarget.style.display = 'none';
+          }}
+        />
       </div>
+
+      <div className="mb-2 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+        <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+        <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/60">Gemini 3 Powered</span>
+      </div>
+      
       <h2 className="text-4xl font-black tracking-tighter mb-1 text-white drop-shadow-lg">
         CAST<span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 italic">AI</span>
       </h2>
-      <p className="text-xs text-blue-200/60 font-medium tracking-wide max-w-[200px] leading-tight">
-        Next-gen Farcaster engagement powered by Gemini 3 Flash
+      <p className="text-[10px] text-blue-200/50 font-bold uppercase tracking-[0.2em] max-w-[220px] leading-tight">
+        The Ultimate Farcaster Creation Studio
       </p>
     </div>
 
-    {/* Decorative Neon Lines */}
-    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
-    <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
+    {/* Decorative Elements */}
+    <div className="absolute top-4 right-4 opacity-20">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="white">
+        <path d="M20 0 L22 18 L40 20 L22 22 L20 40 L18 22 L0 20 L18 18 Z" />
+      </svg>
+    </div>
   </div>
 );
 
