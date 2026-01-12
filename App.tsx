@@ -9,6 +9,21 @@ import { fetchUserInfo } from './services/neynarService';
 import { NeynarUser } from './types';
 import { sdk } from '@farcaster/frame-sdk';
 
+const LogoIcon = () => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_8px_rgba(168,85,247,0.5)]">
+    <rect width="32" height="32" rx="8" fill="url(#paint0_linear)" />
+    <path d="M22 11C22 11 19.5 11 18 13.5C16.5 16 16.5 21 16.5 21" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
+    <path d="M10 21C10 21 12.5 21 14 18.5C15.5 16 15.5 11 15.5 11" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
+    <circle cx="16" cy="16" r="3" fill="white" className="animate-pulse" />
+    <defs>
+      <linearGradient id="paint0_linear" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#A855F7" />
+        <stop offset="1" stopColor="#3B82F6" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>(Tab.HOME);
   const [user, setUser] = useState<NeynarUser | null>(null);
@@ -103,33 +118,39 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-950 via-blue-950 to-black text-white flex flex-col pb-20 overflow-y-auto">
-      <header className="p-6 flex items-center justify-between border-b border-white/10 sticky top-0 z-50 glass">
-        <div className="flex flex-col">
-          <h1 className="text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
-            CastAI
-          </h1>
-          <span className="text-[10px] text-purple-400 font-bold tracking-[0.2em] uppercase opacity-60">AI Studio</span>
+    <div className="min-h-screen bg-gradient-to-br from-[#0a0118] via-[#050520] to-black text-white flex flex-col pb-24 overflow-y-auto">
+      <header className="p-4 flex items-center justify-between border-b border-white/5 sticky top-0 z-50 glass shadow-2xl">
+        <div className="flex items-center gap-3">
+          <LogoIcon />
+          <div className="flex flex-col">
+            <h1 className="text-xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-fuchsia-400 to-blue-400">
+              CastAI
+            </h1>
+            <span className="text-[9px] text-purple-400 font-bold tracking-[0.25em] uppercase opacity-70">Studio v2</span>
+          </div>
         </div>
         
         <div className="flex items-center gap-2">
           {user ? (
-            <div className="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-full border border-white/20 transition-all hover:bg-white/20">
-              <span className="text-xs font-bold">{user.username}</span>
+            <div className="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-2xl border border-white/10 transition-all hover:bg-white/10 group">
+              <div className="flex flex-col items-end mr-1">
+                <span className="text-[10px] font-bold text-white/90">{user.username}</span>
+                <span className="text-[8px] text-purple-400 font-medium">FID: {user.fid}</span>
+              </div>
               <div className="relative">
-                <div className="absolute -inset-0.5 bg-purple-500 rounded-full blur-[2px] opacity-50" />
-                <img src={user.pfp_url} alt="pfp" className="w-6 h-6 rounded-full border border-purple-500 relative z-10" />
+                <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full blur-[4px] opacity-0 group-hover:opacity-60 transition-opacity" />
+                <img src={user.pfp_url} alt="pfp" className="w-8 h-8 rounded-full border border-purple-500 relative z-10 object-cover" />
               </div>
             </div>
           ) : isInitializing ? (
-            <div className="flex items-center gap-2 bg-white/5 px-4 py-1.5 rounded-full border border-white/10 animate-pulse">
-              <div className="w-2 h-2 bg-purple-500 rounded-full animate-ping" />
-              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Syncing</span>
+            <div className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-2xl border border-white/10">
+              <div className="w-1.5 h-1.5 bg-purple-500 rounded-full animate-ping" />
+              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Syncing</span>
             </div>
           ) : (
             <button 
               onClick={handleConnect}
-              className="px-4 py-1.5 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 text-xs font-bold hover:shadow-[0_0_15px_rgba(168,85,247,0.4)] transition-all active:scale-95"
+              className="px-5 py-2 rounded-2xl bg-gradient-to-r from-purple-600 to-blue-600 text-[11px] font-black uppercase tracking-wider hover:shadow-[0_0_20px_rgba(168,85,247,0.5)] transition-all active:scale-95 border border-white/10"
             >
               Connect
             </button>
@@ -137,7 +158,7 @@ const App: React.FC = () => {
         </div>
       </header>
 
-      <main className="flex-1 w-full max-w-md mx-auto px-4 py-8">
+      <main className="flex-1 w-full max-w-md mx-auto relative">
         {renderTab()}
       </main>
 
