@@ -11,7 +11,7 @@
     "webhookUrl": "https://cast-ai-zeta.vercel.app/api/webhook",
     "primaryCategory": "games",
     "description": "AI-powered Farcaster Mini App to generate bios, usernames, and viral crypto posts instantly.",
-    "subtitle": "AI tools for Farcaster creators."
+    "subtitle": "AI Studio for Farcaster"
   },
   "accountAssociation": {
     "header": "eyJmaWQiOjI1NTgyMSwidHlwZSI6ImF1dGgiLCJrZXkiOiIweGMwNTU2NjUwM2U3MGI5NGIxNGFhZTc1YmVGMjY2N0EwRGNCNkJhMjEifQ",
