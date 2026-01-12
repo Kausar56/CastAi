@@ -1,7 +1,7 @@
 {
   "name": "CastAI Studio",
-  "description": "Premium AI Studio for Farcaster creators. Viral bios, usernames, and post templates powered by Gemini 3.",
-  "primaryCategory": "Games",
+  "description": "AI-powered Farcaster Mini App to generate bios, usernames, and viral crypto posts instantly.",
+  "primaryCategory": "games",
   "tags": [
     "neynar",
     "farcaster",
@@ -15,12 +15,12 @@
   ],
   "frame": {
     "version": "1",
-    "imageUrl": "https://cast-ai-zeta.vercel.app/banner.png",
+    "imageUrl": "https://cast-ai-zeta.vercel.app/image.png",
     "button": {
       "title": "Launch Studio",
       "action": {
         "type": "launch_frame",
-        "name": "CastAI",
+        "name": "CastAI Studio",
         "url": "https://cast-ai-zeta.vercel.app",
         "splashImageUrl": "https://cast-ai-zeta.vercel.app/splash.png",
         "splashBackgroundColor": "#0a0118"
