@@ -7,20 +7,20 @@ import { GoogleGenAI } from "@google/genai";
 const getAIClient = () => {
   const apiKey = process.env.API_KEY;
   if (!apiKey) {
-    throw new Error("Gemini API Key is missing. Check your environment variables.");
+    throw new Error("Gemini API Key is missing.");
   }
   return new GoogleGenAI({ apiKey });
 };
 
 /**
  * Generates a short, creative Farcaster bio.
- * Rules: Crypto-native, smart, fun. Max 160 chars. NO HASHTAGS.
+ * Tone: crypto-native, smart, fun. Max 160 chars. No hashtags.
  */
 export const generateBio = async (): Promise<string> => {
   const ai = getAIClient();
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
-    contents: 'You are an expert Farcaster creator. Generate a short, creative Farcaster bio. Tone: crypto-native, smart, fun. Max length: 160 characters. No hashtags. Do not use generic phrases. Be bold and web3-centric.',
+    contents: 'You are an expert Farcaster creator. Generate a short, creative Farcaster bio. Tone: crypto-native, smart, fun. Max length: 160 characters. No hashtags.',
   });
   return response.text?.trim() || '';
 };
@@ -33,7 +33,7 @@ export const generateUsernames = async (): Promise<string> => {
   const ai = getAIClient();
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
-    contents: 'Generate 5 Farcaster username ideas. Style: Web3, crypto, futuristic. Short and memorable. No numbers unless necessary. List them clearly.',
+    contents: 'Generate 5 Farcaster username ideas. Style: Web3, crypto, futuristic. Short and memorable. No numbers unless necessary.',
   });
   return response.text?.trim() || '';
 };
@@ -46,7 +46,7 @@ export const generateSocialPost = async (): Promise<string> => {
   const ai = getAIClient();
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
-    contents: 'Generate a high-engagement Farcaster post. Topic: Web3, builders, crypto culture. Max 280 characters. No emojis overload. Focus on community and building.',
+    contents: 'Generate a high-engagement Farcaster post. Topic: Web3, builders, crypto culture. Max 280 characters. No emojis overload.',
   });
   return response.text?.trim() || '';
 };
@@ -59,7 +59,7 @@ export const generateCryptoPost = async (): Promise<string> => {
   const ai = getAIClient();
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
-    contents: 'Generate a trending crypto Farcaster post. Based on market sentiment, builders, innovation. No financial advice. Short and engaging. Use technical but accessible language.',
+    contents: 'Generate a trending crypto Farcaster post. Based on market sentiment, builders, innovation. No financial advice. Short and engaging.',
   });
   return response.text?.trim() || '';
 };

@@ -1,13 +1,13 @@
 {
   "name": "CastAI Studio",
   "description": "AI-powered Farcaster Mini App to generate bios, usernames, and viral crypto posts instantly.",
-  "primaryCategory": "games",
+  "primaryCategory": "productivity",
   "tags": [
     "neynar",
     "farcaster",
-    "analytics",
-    "reputation",
-    "ai"
+    "ai",
+    "bio",
+    "generator"
   ],
   "requestFramePermissions": [
     "camera",
@@ -15,7 +15,7 @@
   ],
   "frame": {
     "version": "1",
-    "imageUrl": "https://cast-ai-zeta.vercel.app/image.png",
+    "imageUrl": "https://cast-ai-zeta.vercel.app/banner.png",
     "button": {
       "title": "Launch Studio",
       "action": {
