@@ -1,13 +1,17 @@
-
 import React, { useState, useRef } from 'react';
 import * as gemini from '../services/geminiService';
 import { publishCast } from '../services/neynarService';
 
 const Banner = () => (
   <div className="relative w-full h-44 rounded-[2.5rem] overflow-hidden mb-8 border border-white/10 shadow-2xl group">
-    {/* Background Pattern/Gradient */}
+    {/* Background Image / Banner */}
     <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-black" />
-    <div className="absolute inset-0 opacity-30 mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+    <img 
+      src="https://cast-ai-zeta.vercel.app/banner.png" 
+      alt="Banner" 
+      className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay"
+      onError={(e) => (e.currentTarget.style.display = 'none')}
+    />
     
     {/* Animated Glows */}
     <div className="absolute -top-10 -left-10 w-40 h-40 bg-purple-500/30 rounded-full blur-[60px] animate-pulse" />
