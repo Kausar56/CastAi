@@ -1,8 +1,9 @@
 
 import { NeynarUser } from '../types';
+import { sdk } from '@farcaster/frame-sdk';
 
-// Using the provided API keys from the environment or hardcoded fallback
-const NEYNAR_API_KEY = "D73CFC36-6DD6-489C-8416-725B517CA79C";
+// Using keys from injected process.env or provided fallback
+const NEYNAR_API_KEY = process.env.NEYNAR_API_KEY || "D73CFC36-6DD6-489C-8416-725B517CA79C";
 
 /**
  * Fetches the latest user information from Neynar.
@@ -40,12 +41,18 @@ export const fetchUserInfo = async (fid: number = 3): Promise<NeynarUser | null>
 };
 
 /**
- * Publishes a cast to Farcaster.
- * Note: Requires a valid signer_uuid in a production environment.
+ * Opens the native Farcaster composer via the SDK.
+ * This is the correct way to "post" from a Frame v2 Mini App.
  */
 export const publishCast = async (text: string): Promise<boolean> => {
-  console.log("[Neynar] Request to publish cast:", text);
-  // Simulation for the mini-app environment
-  await new Promise(r => setTimeout(r, 1000));
-  return true;
+  try {
+    const composerUrl = `https://warpcast.com/~/compose?text=${encodeURIComponent(text)}`;
+    // Using sdk.actions.openUrl which is supported in most Farcaster clients for Mini Apps
+    await sdk.actions.openUrl(composerUrl);
+    console.log("[CastAI] Triggered composer with text:", text);
+    return true;
+  } catch (err) {
+    console.error("[CastAI] Failed to trigger composer:", err);
+    return false;
+  }
 };

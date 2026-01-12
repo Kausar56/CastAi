@@ -8,9 +8,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
-      // Polyfill process.env for browser environments to prevent ReferenceErrors
+      // Polyfill process.env for browser environments and inject provided keys
       window.process = window.process || { env: {} };
       window.process.env = window.process.env || {};
+      // Injecting user-provided keys for the mini-app environment
+      window.process.env.API_KEY = "AIzaSyCDFMjwuHpShXzb4UhuV5Zy5SSIpkk8hJM";
+      window.process.env.NEYNAR_API_KEY = "D73CFC36-6DD6-489C-8416-725B517CA79C";
+      window.process.env.NEYNAR_CLIENT_ID = "0390b440-7def-4ea4-9a56-4da03bc34e1c";
     </script>
     <style>
       body {
