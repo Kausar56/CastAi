@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Tab } from './types';
 import Navigation from './components/Navigation';
@@ -10,20 +9,22 @@ import { NeynarUser } from './types';
 import { sdk } from '@farcaster/frame-sdk';
 
 const LogoIcon = () => (
-  <svg width="36" height="36" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_12px_rgba(168,85,247,0.6)]">
+  <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_15px_rgba(168,85,247,0.5)]">
     <defs>
-      <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stopColor="#A855F7" />
         <stop offset="100%" stopColor="#3B82F6" />
       </linearGradient>
     </defs>
-    {/* Hexagonal Background */}
-    <path d="M50 5 L89 27.5 L89 72.5 L50 95 L11 72.5 L11 27.5 Z" fill="url(#logoGradient)" />
-    {/* Stylized 'C' Swoosh */}
-    <path d="M75 35 C65 25, 30 25, 25 50 C20 75, 60 75, 75 60 L65 60 C55 65, 35 65, 35 50 C35 35, 60 35, 65 45 Z" fill="white" fillOpacity="0.9" />
+    {/* Hexagon Background */}
+    <path d="M50 5 L89 27.5 L89 72.5 L50 95 L11 72.5 L11 27.5 Z" fill="url(#logoGrad)" />
+    {/* Refined 'C' swoosh matching the user's logo exactly */}
+    <path d="M78 35 C68 22, 32 25, 27 50 C23 72, 58 78, 75 62 C58 73, 28 68, 32 50 C35 30, 68 28, 78 42 Z" fill="white" />
+    <path d="M78 35 L75 44 L68 40 L78 35 Z" fill="white" />
     {/* Stars */}
-    <path d="M82 25 L84 29 L88 30 L84 31 L82 35 L80 31 L76 30 L80 29 Z" fill="white" />
-    <path d="M90 38 L91 40 L93 41 L91 42 L90 44 L89 42 L87 41 L89 40 Z" fill="white" opacity="0.8" />
+    <path d="M83 22 L84.5 25 L88 26 L84.5 27 L83 30 L81.5 27 L78 26 L81.5 25 Z" fill="white" />
+    <path d="M91 35 L92 37 L94 38 L92 39 L91 41 L90 39 L88 38 L90 37 Z" fill="white" opacity="0.8" />
+    <path d="M85 45 L85.5 46.5 L87 47 L85.5 47.5 L85 49 L84.5 47.5 L83 47 L84.5 46.5 Z" fill="white" opacity="0.6" />
   </svg>
 );
 

@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import * as gemini from '../services/geminiService';
 import { publishCast } from '../services/neynarService';
@@ -10,8 +9,9 @@ const Banner = () => (
     <img 
       src="https://cast-ai-zeta.vercel.app/image.png" 
       alt="Banner" 
-      className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay group-hover:scale-105 transition-transform duration-700"
+      className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay group-hover:scale-105 transition-transform duration-700"
       onError={(e) => {
+        // Hide only the background image on error, keeping the gradient
         e.currentTarget.style.display = 'none';
       }}
     />
@@ -22,13 +22,14 @@ const Banner = () => (
     
     {/* Content */}
     <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-10">
-      <div className="mb-4 relative">
-        <div className="absolute -inset-4 bg-white/5 rounded-full blur-xl" />
+      <div className="mb-4 relative group-hover:scale-110 transition-transform duration-500">
+        <div className="absolute -inset-4 bg-purple-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
         <img 
           src="https://cast-ai-zeta.vercel.app/icon.png" 
           alt="CastAI Logo" 
-          className="w-16 h-16 rounded-2xl relative z-10 drop-shadow-[0_0_15px_rgba(168,85,247,0.5)]"
+          className="w-16 h-16 rounded-2xl relative z-10 drop-shadow-[0_0_15px_rgba(168,85,247,0.6)]"
           onError={(e) => {
+             // If icon.png fails, the app still shows the SVG logo in header
              e.currentTarget.style.display = 'none';
           }}
         />
@@ -36,23 +37,20 @@ const Banner = () => (
 
       <div className="mb-2 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
         <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-        <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/60">Gemini 3 Powered</span>
+        <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/60">AI Studio v2</span>
       </div>
       
       <h2 className="text-4xl font-black tracking-tighter mb-1 text-white drop-shadow-lg">
         CAST<span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 italic">AI</span>
       </h2>
       <p className="text-[10px] text-blue-200/50 font-bold uppercase tracking-[0.2em] max-w-[220px] leading-tight">
-        The Ultimate Farcaster Creation Studio
+        Powered by Gemini 3 Flash
       </p>
     </div>
 
-    {/* Decorative Elements */}
-    <div className="absolute top-4 right-4 opacity-20">
-      <svg width="40" height="40" viewBox="0 0 40 40" fill="white">
-        <path d="M20 0 L22 18 L40 20 L22 22 L20 40 L18 22 L0 20 L18 18 Z" />
-      </svg>
-    </div>
+    {/* Decorative Neon Lines */}
+    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-purple-500/30 to-transparent" />
+    <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-blue-500/30 to-transparent" />
   </div>
 );
 
