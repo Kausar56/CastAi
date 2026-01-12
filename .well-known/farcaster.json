@@ -1,0 +1,18 @@
+
+{
+  "accountAssociation": {
+    "header": "eyJmaWQiOiAzLCAidHlwZSI6ICJjdXN0b2RpYWwiLCAia2V5IjogIjB4YTMzNDI1Y2UzYTMxMTljZWRjMGFlYjRiYjE2ZGY4YjVlNDJkYjkyMSJ9",
+    "payload": "eyJkb21haW4iOiAiY2FzdC1haS16ZXRhLnZlcmNlbC5hcHAifQ",
+    "signature": "MHhlNDk0NjRiZGUxMmU0ZWRlMjQ0MjU3YmJiOGY5ZGUxZGVlMjU1YjljZDIzZWY1YmU3ZGUzMzI0YmE0YzFmZGMxMDU5YjExYmI4Yzk0YjFjZDEyYmU0ZGEzY2U0YmU0ZGUzMzI0YmE0YzFmZGMxMDU5YjExYmI4Yzk0YjFjZDEyYmU0ZGEzY2U0"
+  },
+  "frame": {
+    "version": "1",
+    "name": "CastAI Studio",
+    "iconUrl": "https://placehold.co/200x200/8b5cf6/ffffff?text=AI",
+    "homeUrl": "https://cast-ai-zeta.vercel.app",
+    "imageUrl": "https://placehold.co/600x400/8b5cf6/ffffff?text=CastAI+Studio",
+    "buttonTitle": "Launch Studio",
+    "splashImageUrl": "https://placehold.co/200x200/8b5cf6/ffffff?text=AI",
+    "splashBackgroundColor": "#000000"
+  }
+}

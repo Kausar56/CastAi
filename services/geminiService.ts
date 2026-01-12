@@ -1,60 +1,65 @@
 
 import { GoogleGenAI } from "@google/genai";
 
-// Initialize AI helper to safely access the injected API key
-// Always use process.env.API_KEY as the apiKey value.
+/**
+ * Safely initializes the AI client using the injected API key.
+ */
 const getAIClient = () => {
-  return new GoogleGenAI({ apiKey: process.env.API_KEY as string });
+  const apiKey = process.env.API_KEY;
+  if (!apiKey) {
+    throw new Error("Gemini API Key is missing. Check your environment variables.");
+  }
+  return new GoogleGenAI({ apiKey });
 };
 
-// Fix for generateBio: Completing the truncated function
 /**
- * Generates a short and engaging Farcaster profile bio.
+ * Generates a short, creative Farcaster bio.
+ * Tone: crypto-native, smart, fun. Max 160 chars. No hashtags.
  */
 export const generateBio = async (): Promise<string> => {
   const ai = getAIClient();
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
-    contents: 'You are an expert Farcaster creator. Generate a short, witty, and engaging bio for a Farcaster profile. It should be professional yet social, under 160 characters.',
+    contents: 'You are an expert Farcaster creator. Generate a short, creative Farcaster bio. Tone: crypto-native, smart, fun. Max length: 160 characters. No hashtags. Do not use generic phrases.',
   });
-  return response.text || '';
+  return response.text?.trim() || '';
 };
 
-// Fix for HomeTab.tsx: Adding missing generateUsernames function
 /**
- * Suggests creative and unique usernames for a Farcaster user.
+ * Suggests 5 creative and unique usernames.
+ * Style: Web3, crypto, futuristic. Short and memorable. No numbers unless necessary.
  */
 export const generateUsernames = async (): Promise<string> => {
   const ai = getAIClient();
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
-    contents: 'Suggest 5 creative and unique usernames for a Farcaster user based on decentralized tech and social themes.',
+    contents: 'Generate 5 Farcaster username ideas. Style: Web3, crypto, futuristic. Short and memorable. No numbers unless necessary.',
   });
-  return response.text || '';
+  return response.text?.trim() || '';
 };
 
-// Fix for HomeTab.tsx: Adding missing generateSocialPost function
 /**
- * Generates a short, punchy social media post (cast) for Farcaster.
+ * Generates a high-engagement Farcaster social post.
+ * Topic: Web3, builders, crypto culture. Max 280 characters. No emoji overload.
  */
 export const generateSocialPost = async (): Promise<string> => {
   const ai = getAIClient();
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
-    contents: 'Write a short, punchy cast for Farcaster about the future of decentralized social media.',
+    contents: 'Generate a high-engagement Farcaster post. Topic: Web3, builders, crypto culture. Max 280 characters. No emojis overload.',
   });
-  return response.text || '';
+  return response.text?.trim() || '';
 };
 
-// Fix for HomeTab.tsx: Adding missing generateCryptoPost function
 /**
- * Generates a trending-style crypto post suitable for Farcaster.
+ * Generates a trending crypto post.
+ * Based on market sentiment, builders, innovation. No financial advice. Short and engaging.
  */
 export const generateCryptoPost = async (): Promise<string> => {
   const ai = getAIClient();
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
-    contents: 'Write a trending-style crypto post about current market sentiment or an interesting DeFi concept.',
+    contents: 'Generate a trending crypto Farcaster post. Based on market sentiment, builders, innovation. No financial advice. Short and engaging.',
   });
-  return response.text || '';
+  return response.text?.trim() || '';
 };

@@ -13,7 +13,7 @@
       "action": {
         "type": "launch_frame",
         "name": "CastAI",
-        "url": "https://cast-ai.vercel.app",
+        "url": "https://cast-ai-zeta.vercel.app",
         "splashImageUrl": "https://placehold.co/200x200/8b5cf6/ffffff?text=AI",
         "splashBackgroundColor": "#000000"
       }
