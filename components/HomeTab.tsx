@@ -4,18 +4,27 @@ import * as gemini from '../services/geminiService';
 import { publishCast } from '../services/neynarService';
 
 const Banner = () => (
-  <div className="relative w-full h-48 rounded-[2rem] overflow-hidden mb-8 border border-white/10 shadow-2xl bg-gradient-to-br from-[#1a0b2e] to-black">
-    <div className="absolute inset-0 bg-purple-600/10 mix-blend-overlay" />
-    <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-10">
-      <h2 className="text-3xl font-black tracking-tighter mb-1 text-white uppercase italic">
-        Cast<span className="text-purple-400">AI</span> Studio
-      </h2>
-      <p className="text-[10px] text-purple-200/50 font-bold uppercase tracking-[0.2em]">
-        AI-Powered Farcaster Toolkit
-      </p>
-    </div>
+  <div className="relative w-full h-52 rounded-[2rem] overflow-hidden mb-8 border border-white/10 shadow-2xl group">
+    {/* High-quality background image from the specific Vercel URL */}
+    <img 
+      src="https://cast-ai-zeta.vercel.app/banner.png" 
+      alt="CastAI Studio Banner" 
+      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+    />
+    
+    {/* Subtle dark overlay to ensure readability if we add text, and for depth */}
+    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+    
+    {/* Decorative light effects to match the logo glow */}
     <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-500/20 rounded-full blur-[60px]" />
     <div className="absolute -top-10 -left-10 w-40 h-40 bg-purple-500/20 rounded-full blur-[60px]" />
+    
+    {/* Optional badge */}
+    <div className="absolute bottom-4 left-6 z-10">
+      <div className="px-3 py-1 bg-purple-600/30 backdrop-blur-md border border-white/20 rounded-full">
+        <span className="text-[10px] font-black uppercase tracking-widest text-white/90">Premium AI Suite</span>
+      </div>
+    </div>
   </div>
 );
 
@@ -75,7 +84,7 @@ const HomeTab: React.FC = () => {
               {result.type} result
             </span>
           </div>
-          <p className="text-lg leading-relaxed text-gray-100 font-medium">
+          <p className="text-lg leading-relaxed text-gray-100 font-medium whitespace-pre-wrap">
             {result.content}
           </p>
           <div className="flex gap-2 pt-2">

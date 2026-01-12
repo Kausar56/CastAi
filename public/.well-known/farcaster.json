@@ -1,15 +1,16 @@
+
 {
   "frame": {
     "name": "CastAI Studio",
     "version": "1",
     "iconUrl": "https://cast-ai-zeta.vercel.app/icon.png",
     "homeUrl": "https://cast-ai-zeta.vercel.app",
-    "imageUrl": "https://cast-ai-zeta.vercel.app/image.png",
+    "imageUrl": "https://cast-ai-zeta.vercel.app/banner.png",
     "buttonTitle": "Launch Studio",
     "splashImageUrl": "https://cast-ai-zeta.vercel.app/splash.png",
     "splashBackgroundColor": "#0a0118",
     "webhookUrl": "https://cast-ai-zeta.vercel.app/api/webhook",
-    "primaryCategory": "games",
+    "primaryCategory": "productivity",
     "description": "AI-powered Farcaster Mini App to generate bios, usernames, and viral crypto posts instantly.",
     "subtitle": "AI Studio for Farcaster"
   },
