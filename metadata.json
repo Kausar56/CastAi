@@ -1,0 +1,8 @@
+{
+  "name": "CastAI - Farcaster AI Studio",
+  "description": "Premium AI-powered Farcaster companion to generate viral bios, usernames, and posts using Gemini and Neynar.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
