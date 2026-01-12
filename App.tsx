@@ -7,22 +7,39 @@ import AirdropTab from './components/AirdropTab';
 import ProfileTab from './components/ProfileTab';
 import { fetchUserInfo } from './services/neynarService';
 import { NeynarUser } from './types';
+import sdk from '@farcaster/frame-sdk';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>(Tab.HOME);
   const [user, setUser] = useState<NeynarUser | null>(null);
+  const [isFrame, setIsFrame] = useState(false);
 
   useEffect(() => {
-    // Initial fetch - assuming FID 3 for demo or fetching from frame context if available
-    fetchUserInfo(3).then(userData => {
-      if (userData) setUser(userData);
-    });
+    const init = async () => {
+      try {
+        const context = await sdk.context;
+        if (context?.user) {
+          setIsFrame(true);
+          const userData = await fetchUserInfo(context.user.fid);
+          if (userData) setUser(userData);
+        } else {
+          // Fallback for development/web view
+          const userData = await fetchUserInfo(3);
+          if (userData) setUser(userData);
+        }
+      } catch (error) {
+        console.error("SDK Initialization failed", error);
+      } finally {
+        // Signal that the app is ready to be displayed
+        sdk.actions.ready();
+      }
+    };
+
+    init();
   }, []);
 
   const handleDisconnect = () => {
-    // Simulate session termination
     setUser(null);
-    // Optionally redirect to Home tab
     setActiveTab(Tab.HOME);
   };
 

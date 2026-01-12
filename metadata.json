@@ -4,5 +4,19 @@
   "requestFramePermissions": [
     "camera",
     "microphone"
-  ]
+  ],
+  "frame": {
+    "version": "1",
+    "imageUrl": "https://placehold.co/600x400/8b5cf6/ffffff?text=CastAI+Studio",
+    "button": {
+      "title": "Launch Studio",
+      "action": {
+        "type": "launch_frame",
+        "name": "CastAI",
+        "url": "https://cast-ai.vercel.app",
+        "splashImageUrl": "https://placehold.co/200x200/8b5cf6/ffffff?text=AI",
+        "splashBackgroundColor": "#000000"
+      }
+    }
+  }
 }
