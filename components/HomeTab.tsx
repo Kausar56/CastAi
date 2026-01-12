@@ -7,10 +7,13 @@ const Banner = () => (
     {/* Background Image / Banner */}
     <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-black" />
     <img 
-      src="https://cast-ai-zeta.vercel.app/banner.png" 
+      src="https://cast-ai-zeta.vercel.app/image.png" 
       alt="Banner" 
-      className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay"
-      onError={(e) => (e.currentTarget.style.display = 'none')}
+      className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay"
+      onError={(e) => {
+        // Fallback to a solid gradient if image.png is not found
+        e.currentTarget.style.display = 'none';
+      }}
     />
     
     {/* Animated Glows */}
