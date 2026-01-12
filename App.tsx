@@ -14,24 +14,30 @@ const App: React.FC = () => {
   const [user, setUser] = useState<NeynarUser | null>(null);
   const [isFrame, setIsFrame] = useState(false);
 
+  // Signal ready as soon as the component is mounted to clear splash screen
+  useEffect(() => {
+    sdk.actions.ready();
+  }, []);
+
   useEffect(() => {
     const init = async () => {
       try {
+        // We wrap this in a timeout or separate try block to avoid blocking
         const context = await sdk.context;
         if (context?.user) {
           setIsFrame(true);
           const userData = await fetchUserInfo(context.user.fid);
           if (userData) setUser(userData);
         } else {
-          // Fallback for development/web view
+          // Fallback for development/web view: use FID 3
           const userData = await fetchUserInfo(3);
           if (userData) setUser(userData);
         }
       } catch (error) {
-        console.error("SDK Initialization failed", error);
-      } finally {
-        // Signal that the app is ready to be displayed
-        sdk.actions.ready();
+        console.error("Context or User fetching failed:", error);
+        // Fallback to demo user if context fails
+        const userData = await fetchUserInfo(3);
+        if (userData) setUser(userData);
       }
     };
 
@@ -70,12 +76,9 @@ const App: React.FC = () => {
               <img src={user.pfp_url} alt="pfp" className="w-6 h-6 rounded-full border border-purple-500 shadow-sm" />
             </div>
           ) : (
-            <button 
-              onClick={() => fetchUserInfo(3).then(setUser)}
-              className="px-4 py-1.5 rounded-full bg-purple-600 text-xs font-bold hover:bg-purple-500 transition-colors"
-            >
-              Connect
-            </button>
+            <div className="w-24 h-8 bg-white/5 rounded-full animate-pulse flex items-center justify-center border border-white/10">
+              <span className="text-[10px] text-gray-500">Connecting...</span>
+            </div>
           )}
         </div>
       </header>
