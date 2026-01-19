@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CastAI - Farcaster AI Studio</title>
     
-    <!-- Base App ID -->
-    <meta property="base:app_id" content="696e2422c0ab25addaaaf5bb" />
+    <!-- Base App ID Verification -->
+    <meta name="base:app_id" content="696e2422c0ab25addaaaf5bb" />
 
     <!-- Farcaster Frame v2 Meta Tags -->
     <meta property="fc:frame" content='{"version":"1","name":"CastAI Studio","iconUrl":"https://cast-ai-zeta.vercel.app/icon.png","homeUrl":"https://cast-ai-zeta.vercel.app","imageUrl":"https://cast-ai-zeta.vercel.app/banner.png","buttonTitle":"Launch Studio","splashImageUrl":"https://cast-ai-zeta.vercel.app/splash.png","splashBackgroundColor":"#0a0118"}' />
@@ -24,6 +24,7 @@
     <script>
       window.process = window.process || { env: {} };
       window.process.env = window.process.env || {};
+      // These keys are provided by the user for the runtime environment
       window.process.env.API_KEY = "AIzaSyCDFMjwuHpShXzb4UhuV5Zy5SSIpkk8hJM";
       window.process.env.NEYNAR_API_KEY = "D73CFC36-6DD6-489C-8416-725B517CA79C";
       window.process.env.NEYNAR_CLIENT_ID = "0390b440-7def-4ea4-9a56-4da03bc34e1c";

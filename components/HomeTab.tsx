@@ -6,13 +6,19 @@ import { publishCast } from '../services/neynarService';
 const Banner = () => {
   const [imgError, setImgError] = useState(false);
   
+  // Use root-relative path for more reliable local/production asset loading
+  const bannerSrc = "/banner.png";
+  
   return (
     <div className="relative w-full h-52 rounded-[2rem] overflow-hidden mb-8 border border-white/10 shadow-2xl group bg-[#0a0118]">
       {!imgError ? (
         <img 
-          src="https://cast-ai-zeta.vercel.app/banner.png" 
+          src={bannerSrc}
           alt="CastAI Studio Banner" 
-          onError={() => setImgError(true)}
+          onError={() => {
+            console.warn("Banner image failed to load, switching to fallback.");
+            setImgError(true);
+          }}
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
       ) : (
