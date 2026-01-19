@@ -7,32 +7,32 @@ const Banner = () => {
   const [imgError, setImgError] = useState(false);
   
   return (
-    <div className="relative w-full h-52 rounded-[2rem] overflow-hidden mb-8 border border-white/10 shadow-2xl group bg-[#1a0b2e]">
+    <div className="relative w-full h-52 rounded-[2rem] overflow-hidden mb-8 border border-white/10 shadow-2xl group bg-[#0a0118]">
       {!imgError ? (
         <img 
-          src="/banner.png" 
+          src="https://cast-ai-zeta.vercel.app/banner.png" 
           alt="CastAI Studio Banner" 
           onError={() => setImgError(true)}
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
       ) : (
-        <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-          <h2 className="text-3xl font-black tracking-tighter mb-1 text-white uppercase italic">
-            Cast<span className="text-purple-400">AI</span> Studio
+        <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-[#1a0b2e] to-black">
+          <h2 className="text-4xl font-black tracking-tighter mb-1 text-white uppercase italic">
+            Cast<span className="text-purple-500">AI</span> Studio
           </h2>
-          <p className="text-[10px] text-purple-200/50 font-bold uppercase tracking-[0.2em]">
+          <p className="text-[10px] text-purple-300/50 font-bold uppercase tracking-[0.3em]">
             Premium AI Suite
           </p>
         </div>
       )}
       
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
-      <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-500/20 rounded-full blur-[60px]" />
-      <div className="absolute -top-10 -left-10 w-40 h-40 bg-purple-500/20 rounded-full blur-[60px]" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60" />
+      <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-blue-500/10 rounded-full blur-[70px]" />
+      <div className="absolute -top-10 -left-10 w-48 h-48 bg-purple-500/10 rounded-full blur-[70px]" />
       
-      <div className="absolute bottom-4 left-6 z-10">
-        <div className="px-3 py-1 bg-purple-600/30 backdrop-blur-md border border-white/20 rounded-full">
-          <span className="text-[10px] font-black uppercase tracking-widest text-white/90">AI Builder</span>
+      <div className="absolute bottom-5 left-6 z-10">
+        <div className="px-4 py-1.5 bg-purple-600/20 backdrop-blur-xl border border-white/10 rounded-full">
+          <span className="text-[10px] font-black uppercase tracking-widest text-white/90">v2.0 Beta</span>
         </div>
       </div>
     </div>
@@ -58,13 +58,13 @@ const HomeTab: React.FC = () => {
         case 'crypto': content = await gemini.generateCryptoPost(); break;
       }
       
-      if (!content) throw new Error("AI returned empty content");
+      if (!content) throw new Error("The AI brain is a bit sleepy. Try again!");
       
       setResult({ type, content });
       setTimeout(() => resultRef.current?.scrollIntoView({ behavior: 'smooth' }), 150);
     } catch (err: any) {
-      console.error("[CastAI] Generation failed:", err);
-      setError(err.message || "Something went wrong. Please try again.");
+      console.error("[CastAI] Error generating content:", err);
+      setError(err.message || "Failed to generate. Please check your internet.");
     } finally {
       setLoading(false);
     }
@@ -89,9 +89,9 @@ const HomeTab: React.FC = () => {
       </div>
 
       {loading && (
-        <div className="glass rounded-[2rem] p-10 shimmer-bg h-40 flex flex-col items-center justify-center border-purple-500/30">
-          <div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mb-4" />
-          <div className="text-purple-300 font-black animate-pulse text-[10px] tracking-[0.3em] uppercase">Gemini AI Brainstorming</div>
+        <div className="glass rounded-[2rem] p-10 shimmer-bg h-40 flex flex-col items-center justify-center border-purple-500/30 animate-fadeIn">
+          <div className="w-10 h-10 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mb-4" />
+          <div className="text-purple-300 font-black animate-pulse text-[10px] tracking-[0.4em] uppercase">AI Thinking...</div>
         </div>
       )}
 
@@ -102,7 +102,7 @@ const HomeTab: React.FC = () => {
       )}
 
       {result && (
-        <div ref={resultRef} className="glass rounded-[2.5rem] p-6 border-purple-500/40 neon-glow animate-[slideUp_0.4s_ease-out] space-y-6">
+        <div ref={resultRef} className="glass rounded-[2.5rem] p-6 border-purple-500/40 neon-glow animate-slideUp space-y-6">
           <div className="flex justify-between items-center">
             <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1 bg-purple-500/20 rounded-full text-purple-300 border border-purple-500/20">
               {result.type} drafted
@@ -125,7 +125,7 @@ const HomeTab: React.FC = () => {
               onClick={handlePost}
               className="flex-[2] py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:shadow-[0_0_25px_rgba(168,85,247,0.5)] active:scale-95 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all"
             >
-              🚀 Post to Warpcast
+              🚀 Share Cast
             </button>
           </div>
         </div>
